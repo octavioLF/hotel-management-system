@@ -84,4 +84,17 @@ public class ConsumoServicio {
     public void setFechaConsumo(Timestamp fechaConsumo) {
         this.fechaConsumo = fechaConsumo;
     }
+    
+    @Override
+    public String toString() {
+        return "ConsumoServicio{" +
+                "idConsumo=" + idConsumo +
+                ", idReserva=" + idReserva +
+                ", tipoServicio='" + tipoServicio + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", cantidad=" + cantidad +
+                ", precioUnitario=" + precioUnitario +
+                ", fechaConsumo=" + fechaConsumo +
+                '}';
+    }
 }
