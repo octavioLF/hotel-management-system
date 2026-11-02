@@ -64,7 +64,7 @@ public class FacturaHotel {
         return totalFactura;
     }
 
-    public String getStadoPago() {
+    public String getestadoPago() {
         return estadoPago;
     }
  
@@ -101,7 +101,7 @@ public class FacturaHotel {
         this.totalFactura = totalFactura;
     }
 
-    public void setStadoPago(String stadoPago) {
+    public void setestadoPago(String stadoPago) {
         this.estadoPago = stadoPago;
     }
     
