@@ -1,0 +1,18 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package com.olf.dao;
+import java.util.ArrayList;
+/**
+ *
+ * @author octavioLF
+ */
+public interface Crud<T, K>{
+    boolean crear(T entidad);
+    boolean actualizar(T entidad);
+    boolean eliminar (K id);
+    T buscarPorId(K id);
+    ArrayList<T> ListarTodos();
+    
+}
