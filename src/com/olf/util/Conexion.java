@@ -51,7 +51,7 @@ public class Conexion {
             
         }
     }
-    public static synchronized Conexion getInstacia(){
+    public static synchronized Conexion getInstancia(){
         if(instancia == null){
             instancia = new Conexion();
         }

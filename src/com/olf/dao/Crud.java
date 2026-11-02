@@ -13,6 +13,6 @@ public interface Crud<T, K>{
     boolean actualizar(T entidad);
     boolean eliminar (K id);
     T buscarPorId(K id);
-    ArrayList<T> ListarTodos();
+    ArrayList<T> listarTodos();
     
 }
