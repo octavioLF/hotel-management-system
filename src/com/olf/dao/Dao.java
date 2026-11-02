@@ -6,7 +6,7 @@ package com.olf.dao;
 
 /**
  *
- * @author sheyl
+ * @author OctavioLF
  */
 public interface Dao <T, K> extends Crud <T, K>{
     

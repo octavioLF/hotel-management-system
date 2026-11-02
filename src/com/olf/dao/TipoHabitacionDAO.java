@@ -8,7 +8,7 @@ import com.olf.model.TipoHabitacion;
 
 /**
  *
- * @author sheyl
+ * @author OctavioLF
  */
 public interface TipoHabitacionDAO extends Crud<TipoHabitacion, Integer> {
     TipoHabitacion buscarPorNombre(String nombreTipo);
