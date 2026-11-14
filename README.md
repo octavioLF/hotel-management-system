@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1>🏨 GrandStay — Hotel Management System</h1>
+<h1>GrandStay — Hotel Management System</h1>
 
 <p>
   <strong>A full-featured, desktop hotel management application built with Java, JavaFX & MySQL.</strong><br/>
@@ -19,22 +19,22 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [About the Project](#-about-the-project)
-- [Features](#-features)
-- [Architecture](#-architecture)
-- [Database Schema](#-database-schema)
-- [Tech Stack](#-tech-stack)
-- [Prerequisites](#-prerequisites)
-- [Installation & Setup](#-installation--setup)
-- [Project Structure](#-project-structure)
-- [Role-Based Access Control](#-role-based-access-control)
-- [Author](#-author)
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Database Schema](#database-schema)
+- [Tech Stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Installation & Setup](#installation--setup)
+- [Project Structure](#project-structure)
+- [Role-Based Access Control](#role-based-access-control)
+- [Author](#author)
 
 ---
 
-## 🎯 About the Project
+## About the Project
 
 **GrandStay** is a desktop application that covers the full operational cycle of a hotel:
 
@@ -44,68 +44,68 @@ Built with clean **DAO + Service** architecture and **MVC** separation, it demon
 
 ---
 
-## ✨ Features
+## Features
 
 | Module | Description |
 |---|---|
-| 🔐 **Authentication** | Secure login with PBKDF2+Salt password hashing |
-| 👥 **Role Management** | 5 roles (Admin, Receptionist, Cashier, Auditor, Housekeeping) |
-| 🛏️ **Room Types** | CRUD for room categories with pricing |
-| 🏠 **Rooms** | CRUD with status tracking (available, occupied, cleaning, maintenance) |
-| 🧳 **Guests** | Full guest registry with ID document, contact info & nationality |
-| 📅 **Reservations** | Create, update, and track reservations with deposits |
-| ✅ **Check-In** | Register guest arrival and update room status |
-| 🚪 **Check-Out** | Automated checkout via MySQL stored procedure |
-| 🍽️ **Service Consumption** | Register hotel services (minibar, restaurant, laundry, spa) |
-| 🧾 **Invoicing** | Auto-generated invoices at checkout with full billing breakdown |
-| 📊 **Dashboard** | Overview screen for quick operational insight |
+| Authentication | Secure login with PBKDF2+Salt password hashing |
+| Role Management | 5 roles (Admin, Receptionist, Cashier, Auditor, Housekeeping) |
+| Room Types | CRUD for room categories with pricing |
+| Rooms | CRUD with status tracking (available, occupied, cleaning, maintenance) |
+| Guests | Full guest registry with ID document, contact info & nationality |
+| Reservations | Create, update, and track reservations with deposits |
+| Check-In | Register guest arrival and update room status |
+| Check-Out | Automated checkout via MySQL stored procedure |
+| Service Consumption | Register hotel services (minibar, restaurant, laundry, spa) |
+| Invoicing | Auto-generated invoices at checkout with full billing breakdown |
+| Dashboard | Overview screen for quick operational insight |
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 The project follows a layered **MVC + DAO + Service** architecture:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                        VIEW  (JavaFX / FXML)                │
-│              LoginView.fxml  •  DashboardView.fxml          │
-└─────────────────────────┬───────────────────────────────────┘
-                          │
-┌─────────────────────────▼───────────────────────────────────┐
-│                     CONTROLLER                               │
-│          LoginController  •  DashboardController            │
-└──────────────┬──────────────────────────┬───────────────────┘
-               │                          │
-┌──────────────▼──────────┐  ┌────────────▼───────────────────┐
-│       SERVICE LAYER     │  │        SECURITY LAYER          │
-│  CheckInService         │  │  RolePermissions (RBAC)        │
-│  CheckoutService        │  │  SesionContext (Session State) │
-└──────────────┬──────────┘  └────────────────────────────────┘
-               │
-┌──────────────▼──────────────────────────────────────────────┐
-│                     DAO LAYER  (JDBC)                        │
-│  HuespedDAO  • HabitacionDAO  • ReservaDAO  • UsuarioDAO    │
-│  TipoHabitacionDAO  • ConsumoServicioDAO  • FacturaHotelDAO │
-└──────────────┬──────────────────────────────────────────────┘
-               │
-┌──────────────▼──────────────────────────────────────────────┐
-│               DATABASE  (MySQL 8 — grandstay_in4cm)         │
-│         Tables • Stored Procedures • Views • Indexes        │
-└─────────────────────────────────────────────────────────────┘
++-------------------------------------------------------------+
+|                     VIEW  (JavaFX / FXML)                   |
+|           LoginView.fxml  .  DashboardView.fxml             |
++-------------------------+-----------------------------------+
+                          |
++-------------------------v-----------------------------------+
+|                      CONTROLLER                             |
+|          LoginController  .  DashboardController           |
++--------------+------------------------------+--------------+
+               |                              |
++--------------v-----------+  +--------------v--------------+
+|       SERVICE LAYER      |  |        SECURITY LAYER       |
+|  CheckInService          |  |  RolePermissions (RBAC)     |
+|  CheckoutService         |  |  SesionContext (Session)    |
++--------------+-----------+  +-----------------------------+
+               |
++--------------v---------------------------------------------+
+|                    DAO LAYER  (JDBC)                        |
+|  HuespedDAO  . HabitacionDAO  . ReservaDAO  . UsuarioDAO   |
+|  TipoHabitacionDAO  . ConsumoServicioDAO  . FacturaHotelDAO|
++--------------+---------------------------------------------+
+               |
++--------------v---------------------------------------------+
+|            DATABASE  (MySQL 8 — grandstay_in4cm)           |
+|       Tables . Stored Procedures . Views . Indexes         |
++------------------------------------------------------------+
 ```
 
 ---
 
-## 🗄️ Database Schema
+## Database Schema
 
-The database (`grandstay_in4cm`) includes **7 tables**, **stored procedures** for all CRUD operations, **6 query views**, and a transactional **checkout stored procedure**.
+The database (`grandstay_in4cm`) includes **7 tables**, stored procedures for all CRUD operations, **6 query views**, and a transactional checkout stored procedure.
 
 ```
-usuario ──────────────────────────────────────────────────────
-tipo_habitacion ──► habitacion ──► reserva ──► consumo_servicio
-                                       └──────► factura_hotel
-                        huesped ──────►
+usuario
+tipo_habitacion ---> habitacion ---> reserva ---> consumo_servicio
+                                         \-------> factura_hotel
+                     huesped ----------->
 ```
 
 **Tables:** `usuario`, `tipo_habitacion`, `habitacion`, `huesped`, `reserva`, `consumo_servicio`, `factura_hotel`
@@ -114,7 +114,7 @@ tipo_habitacion ──► habitacion ──► reserva ──► consumo_servici
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Technology | Purpose |
 |---|---|
@@ -128,19 +128,19 @@ tipo_habitacion ──► habitacion ──► reserva ──► consumo_servici
 
 ---
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before running the project, make sure you have the following installed:
 
-- ☕ **JDK 17** or higher — [Download](https://adoptium.net/)
-- 🎨 **JavaFX SDK 17+** — [Download](https://gluonhq.com/products/javafx/)
-- 🐬 **MySQL 8.0+** — [Download](https://dev.mysql.com/downloads/)
-- 🔌 **MySQL Connector/J** — [Download](https://dev.mysql.com/downloads/connector/j/)
-- 🛠️ **Apache NetBeans 20+** (recommended) — [Download](https://netbeans.apache.org/)
+- **JDK 17** or higher — [Download](https://adoptium.net/)
+- **JavaFX SDK 17+** — [Download](https://gluonhq.com/products/javafx/)
+- **MySQL 8.0+** — [Download](https://dev.mysql.com/downloads/)
+- **MySQL Connector/J** — [Download](https://dev.mysql.com/downloads/connector/j/)
+- **Apache NetBeans 20+** (recommended) — [Download](https://netbeans.apache.org/)
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 ### 1. Clone the repository
 
@@ -177,7 +177,7 @@ db.password=YOUR_MYSQL_PASSWORD
 db.driver=com.mysql.cj.jdbc.Driver
 ```
 
-> ⚠️ `src/db.properties` is listed in `.gitignore` — your credentials will never be committed.
+> **Note:** `src/db.properties` is listed in `.gitignore` — your credentials will never be committed.
 
 ### 4. Add libraries to the project
 
@@ -196,16 +196,16 @@ ant run
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 hotel-management-system/
 ├── src/
-│   ├── db.properties              ← Your local DB config (git-ignored)
+│   ├── db.properties              <- Your local DB config (git-ignored)
 │   └── com/olf/
 │       ├── system/
-│       │   └── Main.java          ← JavaFX Application entry point
-│       ├── model/                 ← Domain entities (POJOs)
+│       │   └── Main.java          <- JavaFX Application entry point
+│       ├── model/                 <- Domain entities (POJOs)
 │       │   ├── Usuario.java
 │       │   ├── TipoHabitacion.java
 │       │   ├── Habitacion.java
@@ -213,55 +213,55 @@ hotel-management-system/
 │       │   ├── Reserva.java
 │       │   ├── ConsumoServicio.java
 │       │   └── FacturaHotel.java
-│       ├── dao/                   ← DAO interfaces
+│       ├── dao/                   <- DAO interfaces
 │       │   ├── Crud.java
 │       │   ├── Dao.java
-│       │   └── impl/              ← JDBC implementations
-│       ├── service/               ← Business logic
+│       │   └── impl/              <- JDBC implementations
+│       ├── service/               <- Business logic
 │       │   ├── CheckInService.java
 │       │   └── CheckoutService.java
-│       ├── security/              ← Auth & RBAC
+│       ├── security/              <- Auth & RBAC
 │       │   ├── RolePermissions.java
 │       │   └── SesionContext.java
-│       ├── controller/            ← JavaFX controllers
+│       ├── controller/            <- JavaFX controllers
 │       │   ├── LoginController.java
 │       │   └── DashboardController.java
-│       ├── view/                  ← FXML layouts & CSS
+│       ├── view/                  <- FXML layouts & CSS
 │       │   ├── LoginView.fxml
 │       │   ├── DashboardView.fxml
 │       │   └── loginview.css
-│       ├── exception/             ← Custom exceptions
+│       ├── exception/             <- Custom exceptions
 │       │   ├── AppException.java
 │       │   ├── DBException.java
 │       │   └── GlobalExceptionHandler.java
 │       └── util/
-│           ├── Conexion.java      ← Singleton DB connection
-│           └── PasswordHasher.java← PBKDF2 password hashing
+│           ├── Conexion.java      <- Singleton DB connection
+│           └── PasswordHasher.java<- PBKDF2 password hashing
 ├── sql/
-│   ├── 01-ddl-grandstay.sql      ← Schema: tables, procedures, views
-│   └── 02-dml-grandstay.sql      ← Seed data
-├── db.properties.example          ← Connection config template
-├── build.xml                      ← Ant build file
+│   ├── 01-ddl-grandstay.sql      <- Schema: tables, procedures, views
+│   └── 02-dml-grandstay.sql      <- Seed data
+├── db.properties.example          <- Connection config template
+├── build.xml                      <- Ant build file
 └── manifest.mf
 ```
 
 ---
 
-## 🔐 Role-Based Access Control
+## Role-Based Access Control
 
 The system supports **5 user roles**, each with a different set of allowed modules:
 
 | Role | Dashboard | Room Types | Rooms | Guests | Reservations | Services | Invoices | Users | Check-In | Check-Out |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Admin / Gerente** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Recepcionista** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
-| **Cajero / Contador** | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
-| **Auditor** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ |
-| **Housekeeping** | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Admin / Gerente** | Yes | Yes | Yes | Yes | Yes | Yes | Yes | Yes | Yes | Yes |
+| **Recepcionista** | Yes | Yes | Yes | Yes | Yes | Yes | Yes | No | Yes | Yes |
+| **Cajero / Contador** | Yes | No | No | No | Yes | Yes | Yes | No | Yes | Yes |
+| **Auditor** | Yes | Yes | Yes | Yes | Yes | Yes | Yes | No | No | No |
+| **Housekeeping** | Yes | No | Yes | No | No | No | No | No | No | No |
 
 ---
 
-## 👤 Author
+## Author
 
 **Octavio López Flores**
 
@@ -270,5 +270,5 @@ The system supports **5 user roles**, each with a different set of allowed modul
 ---
 
 <div align="center">
-  <sub>Built with ❤️ using Java · JavaFX · MySQL</sub>
+  <sub>Built with Java · JavaFX · MySQL</sub>
 </div>
