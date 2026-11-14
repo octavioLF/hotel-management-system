@@ -18,15 +18,15 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-        stage.setTitle("| Gestion Hotelera | ");
+        stage.setTitle("GrandStay | Gestión hotelera");
         stage.setMinWidth(980);
         stage.setMinHeight(640);
-        show("LoginView.fxml", 1000, 700);
+        show("LoginView.fxml", 1100, 720);
         stage.show();
     }
 
     public static void show(String view, double width, double height) throws IOException {
-        Parent root = FXMLLoader.load(Main.class.getResource("/org/olf/view" + view));
+        Parent root = FXMLLoader.load(Main.class.getResource("/com/olf/view/" + view));
         primaryStage.setScene(new Scene(root, width, height));
         primaryStage.centerOnScreen();
     }
