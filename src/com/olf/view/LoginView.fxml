@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 <StackPane xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="org.ol.controller.LoginController" styleClass="login-root">
+           fx:controller="com.olf.controller.LoginController" styleClass="login-root">
     <stylesheets><URL value="@login.css"/></stylesheets>
     <children>
         <VBox alignment="CENTER" maxWidth="380" maxHeight="500" spacing="12" styleClass="login-card">
