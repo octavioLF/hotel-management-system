@@ -1,15 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.olf.controller;
 
-import com.olf.dao.UsuarioDAO;
-import com.olf.dao.impl.UsuarioDAOImpl;
-import com.olf.model.Usuario;
-import com.olf.security.RolePermissions;
-import com.olf.security.SesionContext;
-import com.olf.system.Main;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,43 +9,41 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-/**
- *
- * @author OctavioLF
- */
-public class LoginController implements Initializable {
+import com.olf.dao.UsuarioDAO;
+import com.olf.dao.impl.UsuarioDAOImpl;
+import com.olf.security.RolePermissions;
+import com.olf.security.SesionContext;
+import com.olf.model.Usuario;
+import com.olf.system.Main;
+import com.olf.util.PasswordHasher;
 
-    @FXML
-    private TextField usernameField;
-    @FXML
-    private PasswordField passwordField;
-    @FXML
-    private Label messageLabel;
-    @FXML
-    private Button bootstrapButton;
+public class LoginController implements Initializable {
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private Label messageLabel;
+    @FXML private Button bootstrapButton;
     private final UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @Override public void initialize(URL location, ResourceBundle resources) {
         messageLabel.setText("");
         try {
             boolean noUsers = usuarioDAO.listarTodos().isEmpty();
             bootstrapButton.setVisible(noUsers);
             bootstrapButton.setManaged(noUsers);
         } catch (RuntimeException e) {
-            messageLabel.setText("No se pudo conectar con la base de datos revisa lo siguiente: " + e);
+            messageLabel.setText("No se pudo conectar con la base de datos.");
         }
     }
 
-    @FXML
-    private void Login() {
+    @FXML private void login() {
         String username = usernameField.getText() == null ? "" : usernameField.getText().trim();
         char[] password = passwordField.getText() == null ? new char[0] : passwordField.getText().toCharArray();
         if (username.isEmpty() || password.length == 0) {
-            messageLabel.setText("Escriba su usuario y contraseña. ");
+            messageLabel.setText("Escribe tu usuario y contraseña.");
             return;
         }
         try {
+            // Usamos el método iniciarSesion del DAO para aprovechar el auto-hasheo
             Usuario user = usuarioDAO.iniciarSesion(username, new String(password));
             if (user == null) {
                 messageLabel.setText("Usuario o contraseña incorrectos.");
@@ -63,24 +51,21 @@ public class LoginController implements Initializable {
                 return;
             }
             if (RolePermissions.forRole(user.getRol()).isEmpty()) {
-                messageLabel.setText("Su rol no tiene permisos configurados para acceder al sistema.");
+                messageLabel.setText("Tu rol no tiene permisos configurados para acceder al sistema.");
                 passwordField.clear();
                 return;
             }
-
-        } catch (RuntimeException e) {
-            messageLabel.setText("No se pudo iniciar sesión. Revisa la conexion con la base de datos. ");
+            SesionContext.getInstancia().setUsuarioActual(user);
+            Main.show("DashboardView.fxml", 1280, 800);
+        } catch (RuntimeException | IOException e) {
+            messageLabel.setText("No se pudo iniciar sesión. Revisa la conexión con la base de datos.");
         } finally {
             java.util.Arrays.fill(password, '\0');
         }
     }
 
-    @FXML
-    private void bootstrapAdmin() {
-        try {
-            Main.show("BootstrapAdminView.fxml", 760, 820);
-        } catch (IOException e) {
-            messageLabel.setText("No se pudo abrir la configuración inicial.");
-        }
+    @FXML private void bootstrapAdmin() {
+        try { Main.show("BootstrapAdminView.fxml", 760, 820); }
+        catch (IOException e) { messageLabel.setText("No se pudo abrir la configuración inicial."); }
     }
 }
