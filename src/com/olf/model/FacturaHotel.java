@@ -1,21 +1,22 @@
-
 package com.olf.model;
+
 import java.sql.Timestamp;
+
 /**
  *
  * @author OctavioLF
  */
 public class FacturaHotel {
 
- private int idFactura;
- private int idReserva;
- private Timestamp fechaEmision;
- private int diasHospedados;
- private Double subtotalHospedaje;
- private Double subtotalConsumos;
- private Double depositoAplicado;
- private Double totalFactura;
- private String estadoPago;
+    private int idFactura;
+    private int idReserva;
+    private Timestamp fechaEmision;
+    private int diasHospedados;
+    private Double subtotalHospedaje;
+    private Double subtotalConsumos;
+    private Double depositoAplicado;
+    private Double totalFactura;
+    private String estadoPago;
 
     public FacturaHotel() {
     }
@@ -36,76 +37,75 @@ public class FacturaHotel {
         return idFactura;
     }
 
-    public int getIdReserva() {
-        return idReserva;
-    }
-
-    public Timestamp getFechaEmision() {
-        return fechaEmision;
-    }
-
-    public int getDiasHospedados() {
-        return diasHospedados;
-    }
-
-    public Double getSubtotalHospedaje() {
-        return subtotalHospedaje;
-    }
-
-    public Double getSubtotalConsumos() {
-        return subtotalConsumos;
-    }
-
-    public Double getDepositoAplicado() {
-        return depositoAplicado;
-    }
-
-    public Double getTotalFactura() {
-        return totalFactura;
-    }
-
-    public String getestadoPago() {
-        return estadoPago;
-    }
- 
-    
     public void setIdFactura(int idFactura) {
         this.idFactura = idFactura;
+    }
+
+    public int getIdReserva() {
+        return idReserva;
     }
 
     public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
     }
 
+    public Timestamp getFechaEmision() {
+        return fechaEmision;
+    }
+
     public void setFechaEmision(Timestamp fechaEmision) {
         this.fechaEmision = fechaEmision;
+    }
+
+    public int getDiasHospedados() {
+        return diasHospedados;
     }
 
     public void setDiasHospedados(int diasHospedados) {
         this.diasHospedados = diasHospedados;
     }
 
+    public Double getSubtotalHospedaje() {
+        return subtotalHospedaje;
+    }
+
     public void setSubtotalHospedaje(Double subtotalHospedaje) {
         this.subtotalHospedaje = subtotalHospedaje;
+    }
+
+    public Double getSubtotalConsumos() {
+        return subtotalConsumos;
     }
 
     public void setSubtotalConsumos(Double subtotalConsumos) {
         this.subtotalConsumos = subtotalConsumos;
     }
 
+    public Double getDepositoAplicado() {
+        return depositoAplicado;
+    }
+
     public void setDepositoAplicado(Double depositoAplicado) {
         this.depositoAplicado = depositoAplicado;
+    }
+
+    public Double getTotalFactura() {
+        return totalFactura;
     }
 
     public void setTotalFactura(Double totalFactura) {
         this.totalFactura = totalFactura;
     }
 
-    public void setestadoPago(String stadoPago) {
-        this.estadoPago = stadoPago;
+    public String getEstadoPago() {
+        return estadoPago;
     }
-    
-        @Override
+
+    public void setEstadoPago(String estadoPago) {
+        this.estadoPago = estadoPago;
+    }
+
+    @Override
     public String toString() {
         return "FacturaHotel{" +
                 "idFactura=" + idFactura +
