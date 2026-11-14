@@ -37,7 +37,7 @@ public class FacturaHotelDAOImpl implements FacturaHotelDAO {
             s.setDouble(4, Objects.requireNonNull(f.getSubtotalConsumos()));
             s.setDouble(5, Objects.requireNonNull(f.getDepositoAplicado()));
             s.setDouble(6, Objects.requireNonNull(f.getTotalFactura()));
-            s.setString(7, f.getestadoPago());
+            s.setString(7, f.getEstadoPago());
             return s.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DBException("No se pudo crear la factura", e);
@@ -55,7 +55,7 @@ public class FacturaHotelDAOImpl implements FacturaHotelDAO {
             s.setDouble(5, Objects.requireNonNull(f.getSubtotalConsumos()));
             s.setDouble(6, Objects.requireNonNull(f.getDepositoAplicado()));
             s.setDouble(7, Objects.requireNonNull(f.getTotalFactura()));
-            s.setString(8, f.getestadoPago());
+            s.setString(8, f.getEstadoPago());
             return s.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DBException("No se pudo actualizar la factura", e);
