@@ -1,4 +1,3 @@
-
 package com.olf.security;
 
 import com.olf.model.Usuario;
@@ -16,10 +15,9 @@ public class SesionContext {
     private String rol;
     private LocalDateTime horaInicioSesion;
 
-    
     public SesionContext() {
     }
-    
+
     public static synchronized SesionContext getInstancia(){
         if (instancia == null){
             instancia = new SesionContext();
@@ -27,32 +25,32 @@ public class SesionContext {
         return instancia;
     }
 
-    public Usuario getUsuarioActutal() {
+    public Usuario getUsuarioActual() {
         return usuarioActual;
     }
 
-   public void setUsuarioActual (Usuario usuario){
-       this.usuarioActual = usuario;
-       if(usuario != null ){
-           this.rol = usuario.getRol();
-           this.horaInicioSesion = LocalDateTime.now();
-       }else{
-           this.rol = null;
-           this.horaInicioSesion = null;
-       }
-   }
-    
-   public String getRol(){
-       return rol;
-   }
-    
-   public LocalDateTime getHoraInicioSesion(){
-       return horaInicioSesion;
-   }
-   
-   public void cerrarSesion(){
-       this.usuarioActual = null;
-       this.rol = null;
-       this.horaInicioSesion = null;
-   }
+    public void setUsuarioActual(Usuario usuario){
+        this.usuarioActual = usuario;
+        if (usuario != null) {
+            this.rol = usuario.getRol();
+            this.horaInicioSesion = LocalDateTime.now();
+        } else {
+            this.rol = null;
+            this.horaInicioSesion = null;
+        }
+    }
+
+    public String getRol(){
+        return rol;
+    }
+
+    public LocalDateTime getHoraInicioSesion(){
+        return horaInicioSesion;
+    }
+
+    public void cerrarSesion(){
+        this.usuarioActual = null;
+        this.rol = null;
+        this.horaInicioSesion = null;
+    }
 }
